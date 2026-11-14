@@ -1,0 +1,77 @@
+name: Documentation and manifest validation
+
+on:
+  push:
+    paths:
+      - "README.md"
+      - "docs/**"
+      - "distribution/packages/**"
+      - ".github/workflows/docs-validation.yml"
+  pull_request:
+    paths:
+      - "README.md"
+      - "docs/**"
+      - "distribution/packages/**"
+      - ".github/workflows/docs-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Validate required project documents
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s README.md
+          test -s docs/architecture/lynxos-linux-edition-001.md
+          test -s docs/decisions/0001-ubuntu-foundation.md
+          test -s docs/security/baseline.md
+          test -s docs/performance/budgets.md
+          test -s docs/development/build-and-test.md
+          test -s docs/roadmap.md
+          test -s distribution/packages/manifest.yaml
+      - name: Validate package manifest structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path("distribution/packages/manifest.yaml")
+          text = path.read_text(encoding="utf-8")
+          required = [
+              "schema_version: 1",
+              "project: LynxOS",
+              'release: "26.04 LTS"',
+              "initial:",
+              "packages:",
+              "policy:",
+          ]
+          missing = [item for item in required if item not in text]
+          if missing:
+              raise SystemExit(f"Manifest missing required markers: {missing}")
+
+          # Basic duplicate check within simple YAML list blocks.
+          seen = set()
+          duplicates = []
+          current_section = None
+          for line in text.splitlines():
+              if line and not line.startswith(" ") and line.endswith(":"):
+                  current_section = line[:-1]
+              match = re.match(r"^    - ([A-Za-z0-9][A-Za-z0-9.+_-]*)$", line)
+              if match:
+                  value = (current_section, match.group(1))
+                  if value in seen:
+                      duplicates.append(value)
+                  seen.add(value)
+          if duplicates:
+              raise SystemExit(f"Duplicate package entries: {duplicates}")
+          print("Manifest structural checks passed.")
+          PY

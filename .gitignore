@@ -1,0 +1,41 @@
+# Build output
+/build/
+/out/
+/dist/
+/artifacts/
+/*.iso
+/*.img
+/*.qcow2
+/*.raw
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# C/C++ build output
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+build.ninja
+.ninja_*
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local secrets and signing material
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/

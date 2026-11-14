@@ -1,0 +1,74 @@
+schema_version: 1
+project: LynxOS
+edition: linux-001
+base:
+  distribution: Ubuntu
+  release: "26.04 LTS"
+  architecture:
+    initial:
+      - amd64
+    future:
+      - arm64
+  repository_components:
+    policy: "Select only after licensing, security and package-availability review."
+    candidates:
+      - main
+      - universe
+      - restricted
+      - multiverse
+  package_manager:
+    primary: apt
+    snap_compatibility: planned
+
+# This is a reviewed starting manifest, not yet a buildable package lock.
+# Exact package availability and names must be validated against the pinned
+# Ubuntu 26.04 repository snapshot before image generation.
+packages:
+  foundation:
+    - systemd
+    - dbus
+    - network-manager
+    - udev
+    - sudo
+    - ca-certificates
+    - ubuntu-keyring
+    - linux-generic
+    - initramfs-tools
+    - grub-efi-amd64-signed
+    - shim-signed
+  desktop_candidates:
+    - wayland
+    - labwc
+    - xwayland
+    - pipewire
+    - wireplumber
+    - xdg-desktop-portal
+    - xdg-desktop-portal-wlr
+    - greetd
+  security:
+    - apparmor
+    - apparmor-utils
+    - nftables
+    - cryptsetup
+    - cryptsetup-initramfs
+    - fwupd
+  diagnostics:
+    - systemd-resolved
+    - pciutils
+    - usbutils
+    - dmidecode
+    - smartmontools
+  planned_first_party:
+    - lynxos-welcome
+    - lynxos-settings
+    - lynxos-update
+    - lynxos-security
+    - lynxos-control-center
+
+policy:
+  no_unreviewed_package_removal: true
+  retain_ubuntu_driver_and_firmware_compatibility: true
+  verify_package_availability_before_build: true
+  pin_package_versions_for_release: true
+  generate_sbom: true
+  sign_release_artifacts: true
