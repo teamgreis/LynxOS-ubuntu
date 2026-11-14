@@ -17,7 +17,7 @@ This roadmap tracks the first Ubuntu-based LynxOS generation. Dates are intentio
 
 - [ ] Pin Ubuntu 26.04 LTS base and repository snapshot.
 - [ ] Define initial x86-64 package manifest.
-- [ ] Compare image-build tooling and record an ADR.
+- [x] Compare image-build tooling and record an ADR. — [ADR 0003](decisions/0003-image-build-tooling.md): ubuntu-image classic selected; validation spike with prototype and artifact hash still outstanding.
 - [ ] Create minimal live image configuration.
 - [ ] Add UEFI QEMU/OVMF boot test.
 - [ ] Capture boot logs and artifact hashes.
