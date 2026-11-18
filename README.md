@@ -40,6 +40,7 @@
 - [Task Engine architecture proposal](docs/architecture/task-engine.md)
 - [Desktop design system requirements](docs/desktop/design-system.md)
 - [Architecture decision: Ubuntu foundation](docs/decisions/0001-ubuntu-foundation.md)
+- [Architecture decision: image-build tooling](docs/decisions/0003-image-build-tooling.md)
 - [Security baseline](docs/security/baseline.md)
 - [Performance budgets and measurement plan](docs/performance/budgets.md)
 - [Development, build, and test workflow](docs/development/build-and-test.md)

@@ -28,6 +28,8 @@ Before selecting the permanent image pipeline, compare suitable Ubuntu image and
 
 The outcome must be recorded as an ADR with a minimal prototype and artifact hash. Do not assume a tool is compatible until tested on the selected Ubuntu release.
 
+The comparison and provisional selection are recorded in [ADR 0003: Image-build tooling](../decisions/0003-image-build-tooling.md) (ubuntu-image classic, live-build fallback, debos for preinstalled/ARM, manual experiments only outside the pipeline). The spike's prototype and artifact hash remain open P001 work; until they exist, the tooling choice is labeled "Documented", not "Tested".
+
 ## Build principles
 
 - Pin the Ubuntu point-release snapshot and package versions for release builds.
